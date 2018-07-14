@@ -5,28 +5,46 @@
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
 	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<label>Dantherm Binding Thing</label>
-		<description>Sample thing for Dantherm Binding</description>
+	<thing-type id="hcv5">
+		<label>Dantherm HCV5</label>
+		<description>Dantherm HCV5 ventillation</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel" />
+			<channel id="fan-power" typeId="fan-speed" />
+			<channel id="temperature1" typeId="temperature" />
+            <channel id="temperature2" typeId="temperature" />
+            <channel id="temperature3" typeId="temperature" />
+            <channel id="temperature4" typeId="temperature" />
 		</channels>
 
 		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample parameter</label>
-				<description>This is a sample text configuration parameter.</description>
+			<parameter name="ipAddress" type="text" required="true">
+				<label>IP address</label>
+				<description>IP address of the HCV5 unit.</description>
+			</parameter>
+			<parameter name="simulationMode" type="boolean" required="false">
+			     <label>Simulation mode</label>
+			     <description>Simulation mode for a HCV5 unit. This allows to experiment with hcv5 things without actually having access to HCV5 device.</description>
+			     <default>false</default>
+			     <advanced>true</advanced>
 			</parameter>
 		</config-description>
 
 	</thing-type>
 
 	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>danthermItem</item-type>
-		<label>Dantherm Binding Channel</label>
-		<description>Sample channel for Dantherm Binding</description>
+	<channel-type id="temperature">
+        <item-type>Number:Temperature</item-type>
+        <label>Temperature</label>
+        <description>Current temperature</description>
+        <category>Temperature</category>
+        <state readOnly="true" pattern="%.1f %unit%" />
 	</channel-type>
+
+    <channel-type id="fan-speed">
+        <item-type>Dimmer</item-type>
+        <label>Fan Speed</label>
+        <description>Control the speed of the fan</description>
+    </channel-type>
 
 </thing:thing-descriptions>
