@@ -25,4 +25,6 @@ public class DanthermConfiguration {
     public String ipAddress;
 
     public boolean simulationMode;
+
+    public int pollingInterval;
 }

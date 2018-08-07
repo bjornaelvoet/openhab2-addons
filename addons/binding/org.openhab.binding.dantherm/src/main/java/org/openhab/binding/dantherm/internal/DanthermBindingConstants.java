@@ -37,7 +37,11 @@ public class DanthermBindingConstants {
     public static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_HCV5);
 
     // List of all Channel ids
-    public static final String CHANNEL_HCV5_FANPOWER = "fan-power";
+    public static final String CHANNEL_HCV5_FANSPEED = "fan-speed";
+
+    public static final String CHANNEL_HCV5_CURRENT_UNITMODE = "current-unitmode";
+    public static final String CHANNEL_HCV5_ACTIVE_UNITMODE = "active-unitmode";
+
     public static final String CHANNEL_HCV5_TEMPERATURE1 = "temperature1";
     public static final String CHANNEL_HCV5_TEMPERATURE2 = "temperature2";
     public static final String CHANNEL_HCV5_TEMPERATURE3 = "temperature3";
@@ -45,7 +49,9 @@ public class DanthermBindingConstants {
 
     // IP network address of the hcv5
     public static final String THING_PROPERTY_IP = "ipAddress";
-
     // Simulation mode for the hcv5
-    public static final String THING_SIMULATION_MODE = "Simulation mode";
+    public static final String THING_PROPERTY_SIMULATION_MODE = "SimulationMode";
+    // Polling interval for the hcv5
+    public static final String THING_PROPERTY_POLLING_INTERVAL = "pollingInterval";
+
 }

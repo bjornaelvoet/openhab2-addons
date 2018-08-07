@@ -10,7 +10,9 @@
 		<description>Dantherm HCV5 ventillation</description>
 
 		<channels>
-			<channel id="fan-power" typeId="fan-speed" />
+			<channel id="fan-speed" typeId="fan-speed" />
+			<channel id="current-unitmode" typeId="unit-mode"/>
+			<channel id="active-unitmode" typeId="unit-mode"/>
 			<channel id="temperature1" typeId="temperature" />
             <channel id="temperature2" typeId="temperature" />
             <channel id="temperature3" typeId="temperature" />
@@ -22,6 +24,10 @@
 				<label>IP address</label>
 				<description>IP address of the HCV5 unit.</description>
 			</parameter>
+            <parameter name="pollingInterval" type="integer" required="true">
+                <label>Polling interval</label>
+                <description>Interval (in seconds) for which the HCV5 unit needs to fetch information.</description>
+            </parameter>
 			<parameter name="simulationMode" type="boolean" required="false">
 			     <label>Simulation mode</label>
 			     <description>Simulation mode for a HCV5 unit. This allows to experiment with hcv5 things without actually having access to HCV5 device.</description>
@@ -31,8 +37,7 @@
 		</config-description>
 
 	</thing-type>
-
-	<!-- Sample Channel Type -->
+	
 	<channel-type id="temperature">
         <item-type>Number:Temperature</item-type>
         <label>Temperature</label>
@@ -42,9 +47,15 @@
 	</channel-type>
 
     <channel-type id="fan-speed">
-        <item-type>Dimmer</item-type>
+        <item-type>Number</item-type>
         <label>Fan Speed</label>
-        <description>Control the speed of the fan</description>
+        <description>Fan speed</description>
     </channel-type>
 
+    <channel-type id="unit-mode">
+        <item-type>Number</item-type>
+        <label>Unit mode</label>
+        <description>Unit mode</description>
+    </channel-type>
+    
 </thing:thing-descriptions>
