@@ -217,7 +217,7 @@ public class DanthermHandler extends BaseThingHandler {
     public void handleUpdate(ChannelUID channelUID, State newState) {
         // TODO Auto-generated method stub
         // super.handleUpdate(channelUID, newState);
-        logger.debug("DanthermHandler TODO");
+        logger.debug("DanthermHandler handleUpdate TODO");
 
     }
 
@@ -225,7 +225,7 @@ public class DanthermHandler extends BaseThingHandler {
     public void thingUpdated(Thing thing) {
         // TODO Auto-generated method stub
         // super.thingUpdated(thing);
-        logger.debug("DanthermHandler TODO");
+        logger.debug("DanthermHandler thingUpdated TODO");
     }
 
     @Override
