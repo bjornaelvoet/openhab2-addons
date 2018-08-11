@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Automatic-Module-Name: org.openhab.binding.dobiss
+Automatic-Module-Name: org.openhab.binding.dobiss-relay
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-ManifestVersion: 2
-Bundle-Name: dobiss Binding
+Bundle-Name: Dobiss Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-SymbolicName: org.openhab.binding.dobiss;singleton:=true
+Bundle-SymbolicName: org.openhab.binding.dobiss-relay;singleton:=true
 Bundle-Vendor: openHAB
 Bundle-Version: 2.4.0.qualifier
 Import-Package: 

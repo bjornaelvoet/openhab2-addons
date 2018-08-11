@@ -3,8 +3,8 @@
 	xmlns:binding="http://eclipse.org/smarthome/schemas/binding/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/binding/v1.0.0 http://eclipse.org/smarthome/schemas/binding-1.0.0.xsd">
 
-	<name>dobiss Binding</name>
-	<description>This is the binding for dobiss.</description>
+	<name>Dobiss Relay Binding</name>
+	<description>This is the binding for the Dobiss relay module.</description>
 	<author>Bjorn Aelvoet</author>
 
 </binding:binding>

@@ -10,14 +10,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.openhab.binding.dobiss.internal;
+package org.openhab.binding.dobiss_relay.internal;
 
 /**
- * The {@link dobissConfiguration} class contains fields mapping thing configuration parameters.
+ * The {@link dobissRelayConfiguration} class contains fields mapping thing configuration parameters.
  *
  * @author Bjorn Aelvoet - Initial contribution
  */
-public class dobissConfiguration {
+public class dobissRelayConfiguration {
 
     /**
      * Sample configuration parameter. Replace with your own.

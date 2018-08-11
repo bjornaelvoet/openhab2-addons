@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="dobiss"
+<thing:thing-descriptions bindingId="dobiss-relay"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<label>dobiss Binding Thing</label>
-		<description>Sample thing for dobiss Binding</description>
+	<thing-type id="relay">
+		<label>Dobiss Relay</label>
+		<description>Dobiss relay</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel" />
+			<channel id="channel1" typeId="relay-channel" />
+			<channel id="channel2" typeId="relay-channel" />
+			<channel id="channel3" typeId="relay-channel" />
+			<channel id="channel4" typeId="relay-channel" />
+			<channel id="channel5" typeId="relay-channel" />
+			<channel id="channel6" typeId="relay-channel" />
+			<channel id="channel7" typeId="relay-channel" />
+			<channel id="channel8" typeId="relay-channel" />
+			<channel id="channel9" typeId="relay-channel" />
+			<channel id="channel10" typeId="relay-channel" />
+			<channel id="channel11" typeId="relay-channel" />
+			<channel id="channel12" typeId="relay-channel" />
 		</channels>
 
 		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample parameter</label>
-				<description>This is a sample text configuration parameter.</description>
+			<parameter name="ipAddress" type="text" required="true">
+				<label>IP address</label>
+				<description>IP address of the Dobiss installion to which the relay belongs.</description>
 			</parameter>
+			<parameter name="address" type="integer" required="true">
+				<label>Address</label>
+				<description>Address given to the relay module.</description>
+			</parameter>
+            <parameter name="pollingInterval" type="integer" required="true">
+                <label>Polling interval</label>
+                <description>Interval (in seconds) for which the Dobiss relay module needs to fetch information.</description>
+            </parameter>			
 		</config-description>
 
 	</thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>dobissItem</item-type>
-		<label>dobiss Binding Channel</label>
-		<description>Sample channel for dobiss Binding</description>
+    	<channel-type id="relay-channel">
+		<item-type>Switch</item-type>
+		<label>Dobiss relay channel</label>
+		<description>Dobiss relay channel</description>
 	</channel-type>
 
 </thing:thing-descriptions>

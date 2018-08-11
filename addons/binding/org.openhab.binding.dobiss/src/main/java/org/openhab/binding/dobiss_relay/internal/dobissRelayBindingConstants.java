@@ -10,19 +10,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.openhab.binding.dobiss.internal;
+package org.openhab.binding.dobiss_relay.internal;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 
 /**
- * The {@link dobissBindingConstants} class defines common constants, which are
+ * The {@link dobissRelayBindingConstants} class defines common constants, which are
  * used across the whole binding.
  *
  * @author Bjorn Aelvoet - Initial contribution
  */
 @NonNullByDefault
-public class dobissBindingConstants {
+public class dobissRelayBindingConstants {
 
     private static final String BINDING_ID = "dobiss";
 

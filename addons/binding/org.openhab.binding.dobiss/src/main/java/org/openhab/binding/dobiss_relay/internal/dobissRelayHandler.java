@@ -10,36 +10,36 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.openhab.binding.dobiss.internal;
+package org.openhab.binding.dobiss_relay.internal;
 
-import static org.openhab.binding.dobiss.internal.dobissBindingConstants.*;
+import static org.openhab.binding.dobiss_relay.internal.dobissRelayBindingConstants.*;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openhab.binding.dobiss.internal.dobissConfiguration;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.openhab.binding.dobiss_relay.internal.dobissRelayConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@link dobissHandler} is responsible for handling commands, which are
+ * The {@link dobissRelayHandler} is responsible for handling commands, which are
  * sent to one of the channels.
  *
  * @author Bjorn Aelvoet - Initial contribution
  */
 @NonNullByDefault
-public class dobissHandler extends BaseThingHandler {
+public class dobissRelayHandler extends BaseThingHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(dobissHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(dobissRelayHandler.class);
 
     @Nullable
-    private dobissConfiguration config;
+    private dobissRelayConfiguration config;
 
-    public dobissHandler(Thing thing) {
+    public dobissRelayHandler(Thing thing) {
         super(thing);
     }
 
@@ -57,7 +57,7 @@ public class dobissHandler extends BaseThingHandler {
 
     @Override
     public void initialize() {
-        config = getConfigAs(dobissConfiguration.class);
+        config = getConfigAs(dobissRelayConfiguration.class);
 
         // TODO: Initialize the thing. If done set status to ONLINE to indicate proper working.
         // Long running initialization should be done asynchronously in background.
