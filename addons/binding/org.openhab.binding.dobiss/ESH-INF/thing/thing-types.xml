@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="dobiss-relay"
+<thing:thing-descriptions bindingId="dobiss_relay"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
@@ -9,18 +9,18 @@
 		<description>Dobiss relay</description>
 
 		<channels>
-			<channel id="channel1" typeId="relay-channel" />
-			<channel id="channel2" typeId="relay-channel" />
-			<channel id="channel3" typeId="relay-channel" />
-			<channel id="channel4" typeId="relay-channel" />
-			<channel id="channel5" typeId="relay-channel" />
-			<channel id="channel6" typeId="relay-channel" />
-			<channel id="channel7" typeId="relay-channel" />
-			<channel id="channel8" typeId="relay-channel" />
-			<channel id="channel9" typeId="relay-channel" />
-			<channel id="channel10" typeId="relay-channel" />
-			<channel id="channel11" typeId="relay-channel" />
-			<channel id="channel12" typeId="relay-channel" />
+			<channel id="channel1" typeId="relay_channel" />
+			<channel id="channel2" typeId="relay_channel" />
+			<channel id="channel3" typeId="relay_channel" />
+			<channel id="channel4" typeId="relay_channel" />
+			<channel id="channel5" typeId="relay_channel" />
+			<channel id="channel6" typeId="relay_channel" />
+			<channel id="channel7" typeId="relay_channel" />
+			<channel id="channel8" typeId="relay_channel" />
+			<channel id="channel9" typeId="relay_channel" />
+			<channel id="channel10" typeId="relay_channel" />
+			<channel id="channel11" typeId="relay_channel" />
+			<channel id="channel12" typeId="relay_channel" />
 		</channels>
 
 		<config-description>
@@ -40,7 +40,7 @@
 
 	</thing-type>
 
-    	<channel-type id="relay-channel">
+    	<channel-type id="relay_channel">
 		<item-type>Switch</item-type>
 		<label>Dobiss relay channel</label>
 		<description>Dobiss relay channel</description>

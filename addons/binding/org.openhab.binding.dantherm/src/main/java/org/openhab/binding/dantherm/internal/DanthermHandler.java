@@ -160,10 +160,13 @@ public class DanthermHandler extends BaseThingHandler {
                 break;
             case CHANNEL_HCV5_FANSPEED:
                 publishHCV5FanSpeed(channelUID);
+                break;
             case CHANNEL_HCV5_CURRENT_UNITMODE:
                 publishHCV5CurrentUnitMode(channelUID);
+                break;
             case CHANNEL_HCV5_ACTIVE_UNITMODE:
                 publishHCV5ActiveUnitMode(channelUID);
+                break;
             default:
                 logger.debug("Can not update channel with ID : {} - channel name might be wrong!", channelID);
                 break;

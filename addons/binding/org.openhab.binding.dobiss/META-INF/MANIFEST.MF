@@ -1,14 +1,15 @@
 Manifest-Version: 1.0
-Automatic-Module-Name: org.openhab.binding.dobiss-relay
+Automatic-Module-Name: org.openhab.binding.dobiss_relay
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-ManifestVersion: 2
-Bundle-Name: Dobiss Binding
+Bundle-Name: Dobiss Relay Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-SymbolicName: org.openhab.binding.dobiss-relay;singleton:=true
+Bundle-SymbolicName: org.openhab.binding.dobiss_relay;singleton:=true
 Bundle-Vendor: openHAB
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 1.0.0.0
 Import-Package: 
+ org.apache.commons.lang;version="2.6.0",
  org.eclipse.jdt.annotation;resolution:=optional,
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,
@@ -20,3 +21,5 @@ Import-Package:
  org.eclipse.smarthome.core.util,
  org.slf4j
 Service-Component: OSGI-INF/*.xml
+Require-Bundle: com.google.guava,
+ org.apache.commons.codec

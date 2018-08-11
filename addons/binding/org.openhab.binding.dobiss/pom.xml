@@ -9,10 +9,10 @@
     <version>2.4.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.openhab.binding.dobiss-relay</artifactId>
+  <artifactId>org.openhab.binding.dobiss_relay</artifactId>
   <packaging>eclipse-plugin</packaging>
 
   <name>Dobiss Relay Binding</name>
 
-  <version>0.9.0-SNAPSHOT</version>
+  <version>1.0.0.0</version>
 </project>
