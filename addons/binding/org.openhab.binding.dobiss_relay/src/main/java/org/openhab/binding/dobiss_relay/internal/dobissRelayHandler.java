@@ -19,6 +19,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,6 +50,10 @@ import org.slf4j.LoggerFactory;
 public class dobissRelayHandler extends BaseThingHandler {
 
     private final Logger logger = LoggerFactory.getLogger(dobissRelayHandler.class);
+
+    private FileMutex mutex = new FileMutex(Paths.get(System.getProperty("user.home"), ".dobiss.openhab.lock"));
+    // Blocking for 100 ms
+    private long mutex_timeout = 100;
 
     @Nullable
     private dobissRelayConfiguration config;
@@ -182,8 +187,11 @@ public class dobissRelayHandler extends BaseThingHandler {
     private void sendDobissRelay(int id, int OnOff) {
 
         // Send dobiss relay module for new state of relay
+
         Socket socket;
         try {
+            mutex.lock(mutex_timeout);
+
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -192,18 +200,18 @@ public class dobissRelayHandler extends BaseThingHandler {
             byte bin[] = new byte[] { -81, 2, 4, (byte) address, 0, 0, 8, 1, 8, -1, -1, -1, -1, -1, -1, -81 };
             byte bout[] = new byte[1024];
             os.write(bin);
-            logger.info("Dobiss relay header send {}", Hex.encodeHexString(bin));
+            logger.debug("Dobiss relay header send {}", Hex.encodeHexString(bin));
 
             is.read(bout, 0, 32);
-            logger.info("Dobiss relay header answer {}", Hex.encodeHexString(bout));
+            logger.debug("Dobiss relay header answer {}", Hex.encodeHexString(bout));
 
             byte bin2[] = new byte[] { (byte) address, (byte) (id - 1), (byte) OnOff, -1, -1, 0x64, -1, -1 };
             byte bout2[] = new byte[1024];
             os.write(bin2);
-            logger.info("Dobiss relay command send {}", Hex.encodeHexString(bin2));
+            logger.debug("Dobiss relay command send {}", Hex.encodeHexString(bin2));
 
             is.read(bout2, 0, 64);
-            logger.info("Dobiss relay command answer {}", Hex.encodeHexString(bout2));
+            logger.debug("Dobiss relay command answer {}", Hex.encodeHexString(bout2));
 
             os.close();
             is.close();
@@ -267,6 +275,15 @@ public class dobissRelayHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
 
+        } finally {
+            try {
+                mutex.unlock();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+                logger.debug("Internal error: Mutex unlock failed!");
+            }
         }
 
     }
@@ -310,6 +327,7 @@ public class dobissRelayHandler extends BaseThingHandler {
         // Check if dobiss relay module can be reached
         Socket socket;
         try {
+            mutex.lock(mutex_timeout);
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -358,10 +376,20 @@ public class dobissRelayHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
 
+        } finally {
+            try {
+                mutex.unlock();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+                logger.debug("Internal error: Mutex unlock failed!");
+            }
         }
 
         // Starting UI pushing
         startAutomaticRefresh();
+
     }
 
     private void queryDobissRelay() {
@@ -369,6 +397,7 @@ public class dobissRelayHandler extends BaseThingHandler {
         // Query dobiss relay module for status of the individual relays
         Socket socket;
         try {
+            mutex.lock(mutex_timeout);
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -377,35 +406,35 @@ public class dobissRelayHandler extends BaseThingHandler {
             byte bin[] = new byte[] { -81, 1, -1, (byte) address, 0, 0, 0, 1, 0, -1, -1, -1, -1, -1, -1, -81 };
             byte bout[] = new byte[1024];
             os.write(bin);
-            // logger.info("Dobiss relay query send {}", Hex.encodeHexString(bin));
+            logger.debug("Dobiss relay query send {}", Hex.encodeHexString(bin));
 
             is.read(bout, 0, 64);
-            // logger.info("Dobiss relay query answer {}", Hex.encodeHexString(bout));
+            logger.debug("Dobiss relay query answer {}", Hex.encodeHexString(bout));
 
             id01 = bout[32];
-            logger.info("Dobiss relay query answer for id01 {}", bout[32]);
+            logger.debug("Dobiss relay query answer for id01 {}", bout[32]);
             id02 = bout[33];
-            logger.info("Dobiss relay query answer for id02 {}", bout[33]);
+            logger.debug("Dobiss relay query answer for id02 {}", bout[33]);
             id03 = bout[34];
-            logger.info("Dobiss relay query answer for id03 {}", bout[34]);
+            logger.debug("Dobiss relay query answer for id03 {}", bout[34]);
             id04 = bout[35];
-            logger.info("Dobiss relay query answer for id04 {}", bout[35]);
+            logger.debug("Dobiss relay query answer for id04 {}", bout[35]);
             id05 = bout[36];
-            logger.info("Dobiss relay query answer for id05 {}", bout[36]);
+            logger.debug("Dobiss relay query answer for id05 {}", bout[36]);
             id06 = bout[37];
-            logger.info("Dobiss relay query answer for id06 {}", bout[37]);
+            logger.debug("Dobiss relay query answer for id06 {}", bout[37]);
             id07 = bout[38];
-            logger.info("Dobiss relay query answer for id07 {}", bout[38]);
+            logger.debug("Dobiss relay query answer for id07 {}", bout[38]);
             id08 = bout[39];
-            logger.info("Dobiss relay query answer for id08 {}", bout[39]);
+            logger.debug("Dobiss relay query answer for id08 {}", bout[39]);
             id09 = bout[40];
-            logger.info("Dobiss relay query answer for id09 {}", bout[40]);
+            logger.debug("Dobiss relay query answer for id09 {}", bout[40]);
             id10 = bout[41];
-            logger.info("Dobiss relay query answer for id10 {}", bout[41]);
+            logger.debug("Dobiss relay query answer for id10 {}", bout[41]);
             id11 = bout[42];
-            logger.info("Dobiss relay query answer for id11 {}", bout[42]);
+            logger.debug("Dobiss relay query answer for id11 {}", bout[42]);
             id12 = bout[43];
-            logger.info("Dobiss relay query answer for id12 {}", bout[43]);
+            logger.debug("Dobiss relay query answer for id12 {}", bout[43]);
 
             os.close();
             is.close();
@@ -426,9 +455,16 @@ public class dobissRelayHandler extends BaseThingHandler {
             logger.debug("Communication to Dobiss relay unit failed!");
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
+        } finally {
+            try {
+                mutex.unlock();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
 
+                logger.debug("Internal error: Mutex unlock failed!");
+            }
         }
-
     }
 
     private void publishValue(ChannelUID channelUID) {
@@ -438,51 +474,51 @@ public class dobissRelayHandler extends BaseThingHandler {
         switch (channelID) {
             case CHANNEL_DOBISS_RELAY_ID_1:
                 updateState(CHANNEL_DOBISS_RELAY_ID_1, DecimalType.valueOf(Integer.toString(id01)));
-                logger.info("Update status for id01 {}", id01);
+                logger.debug("Update status for id01 {}", id01);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_2:
                 updateState(CHANNEL_DOBISS_RELAY_ID_2, DecimalType.valueOf(Integer.toString(id02)));
-                logger.info("Update status for id02 {}", id02);
+                logger.debug("Update status for id02 {}", id02);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_3:
                 updateState(CHANNEL_DOBISS_RELAY_ID_3, DecimalType.valueOf(Integer.toString(id03)));
-                logger.info("Update status for id03 {}", id03);
+                logger.debug("Update status for id03 {}", id03);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_4:
                 updateState(CHANNEL_DOBISS_RELAY_ID_4, DecimalType.valueOf(Integer.toString(id04)));
-                logger.info("Update status for id04 {}", id04);
+                logger.debug("Update status for id04 {}", id04);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_5:
                 updateState(CHANNEL_DOBISS_RELAY_ID_5, DecimalType.valueOf(Integer.toString(id05)));
-                logger.info("Update status for id05 {}", id05);
+                logger.debug("Update status for id05 {}", id05);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_6:
                 updateState(CHANNEL_DOBISS_RELAY_ID_6, DecimalType.valueOf(Integer.toString(id06)));
-                logger.info("Update status for id06 {}", id06);
+                logger.debug("Update status for id06 {}", id06);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_7:
                 updateState(CHANNEL_DOBISS_RELAY_ID_7, DecimalType.valueOf(Integer.toString(id07)));
-                logger.info("Update status for id07 {}", id07);
+                logger.debug("Update status for id07 {}", id07);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_8:
                 updateState(CHANNEL_DOBISS_RELAY_ID_8, DecimalType.valueOf(Integer.toString(id08)));
-                logger.info("Update status for id08 {}", id08);
+                logger.debug("Update status for id08 {}", id08);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_9:
                 updateState(CHANNEL_DOBISS_RELAY_ID_9, DecimalType.valueOf(Integer.toString(id09)));
-                logger.info("Update status for id09 {}", id09);
+                logger.debug("Update status for id09 {}", id09);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_10:
                 updateState(CHANNEL_DOBISS_RELAY_ID_10, DecimalType.valueOf(Integer.toString(id10)));
-                logger.info("Update status for id10 {}", id10);
+                logger.debug("Update status for id10 {}", id10);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_11:
                 updateState(CHANNEL_DOBISS_RELAY_ID_11, DecimalType.valueOf(Integer.toString(id11)));
-                logger.info("Update status for id11 {}", id11);
+                logger.debug("Update status for id11 {}", id11);
                 break;
             case CHANNEL_DOBISS_RELAY_ID_12:
                 updateState(CHANNEL_DOBISS_RELAY_ID_12, DecimalType.valueOf(Integer.toString(id12)));
-                logger.info("Update status for id12 {}", id12);
+                logger.debug("Update status for id12 {}", id12);
                 break;
 
             default:
@@ -517,5 +553,4 @@ public class dobissRelayHandler extends BaseThingHandler {
         }
 
     }
-
 }
