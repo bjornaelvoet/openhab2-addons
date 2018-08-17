@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <thing:thing-descriptions bindingId="dobiss_dimmer"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
-	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+    xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<label>dobiss_dimmer Binding Thing</label>
-		<description>Sample thing for dobiss_dimmer Binding</description>
+    <thing-type id="dimmer">
+        <label>Dobiss Dimmer</label>
+        <description>Dobiss dimmer</description>
 
-		<channels>
-			<channel id="channel1" typeId="sample-channel" />
-		</channels>
+        <channels>
+            <channel id="channel1" typeId="dimmer_channel" />
+            <channel id="channel2" typeId="dimmer_channel" />
+            <channel id="channel3" typeId="dimmer_channel" />
+            <channel id="channel4" typeId="dimmer_channel" />
+        </channels>
 
-		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample parameter</label>
-				<description>This is a sample text configuration parameter.</description>
-			</parameter>
-		</config-description>
+        <config-description>
+            <parameter name="ipAddress" type="text" required="true">
+                <label>IP address</label>
+                <description>IP address of the Dobiss installation to which the dimmer belongs.</description>
+            </parameter>
+            <parameter name="address" type="integer" required="true">
+                <label>Address</label>
+                <description>Address given to the relay module.</description>
+            </parameter>
+            <parameter name="pollingInterval" type="integer" required="true">
+                <label>Polling interval</label>
+                <description>Interval (in seconds) for which the Dobiss dimmer module needs to fetch information.</description>
+            </parameter>            
+        </config-description>
 
-	</thing-type>
+    </thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>dobiss_dimmerItem</item-type>
-		<label>dobiss_dimmer Binding Channel</label>
-		<description>Sample channel for dobiss_dimmer Binding</description>
-	</channel-type>
+        <channel-type id="dimmer_channel">
+        <item-type>Dimmer</item-type>
+        <label>Dobiss dimmer channel</label>
+        <description>Dobiss dimmer channel</description>
+    </channel-type>
 
 </thing:thing-descriptions>

@@ -13,14 +13,18 @@
 package org.openhab.binding.dobiss_dimmer.internal;
 
 /**
- * The {@link dobiss_dimmerConfiguration} class contains fields mapping thing configuration parameters.
+ * The {@link dobissDimmerConfiguration} class contains fields mapping thing configuration parameters.
  *
  * @author Bjorn Aelvoet - Initial contribution
  */
-public class dobiss_dimmerConfiguration {
+public class dobissDimmerConfiguration {
 
     /**
      * Sample configuration parameter. Replace with your own.
      */
-    public String config1;
+    public String ipAddress;
+
+    public int address;
+
+    public int pollingInterval;
 }

@@ -38,6 +38,7 @@ import java.nio.channels.FileLock;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,6 +55,15 @@ class FileMutex {
     private FileLock lock;
 
     public FileMutex(Path lockFile) {
+        // Sleep random time to avoid problems
+        // TODO: Ugly, need to solve this
+        Random random = new Random();
+        try {
+            Thread.sleep(random.nextInt(1000));
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         assert lockFile != null;
         this.lockFile = lockFile;
     }

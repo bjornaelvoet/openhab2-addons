@@ -7,7 +7,7 @@ Bundle-Name: dobiss_dimmer Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-SymbolicName: org.openhab.binding.dobiss_dimmer;singleton:=true
 Bundle-Vendor: openHAB
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 1.0.0.0
 Import-Package: 
  org.eclipse.jdt.annotation;resolution:=optional,
  org.eclipse.smarthome.config.core,
@@ -20,3 +20,6 @@ Import-Package:
  org.eclipse.smarthome.core.util,
  org.slf4j
 Service-Component: OSGI-INF/*.xml
+Require-Bundle: com.google.guava,
+ org.apache.commons.codec,
+ org.apache.commons.lang
