@@ -68,6 +68,11 @@ public class DanthermModbus {
     public float temperatureSupply;
     public float temperatureExtract;
     public float temperatureExhaust;
+    // The precision of the temperature we want to report out
+    private int temperaturePrecision = 1;
+    // The treshold (difference in kept temperature and new temperature) before we are going to update the kept
+    // temperature
+    private float temperatureTreshold = (float) 0.25;
 
     public int currentUnitMode;
     public int activeUnitMode;
@@ -261,6 +266,14 @@ public class DanthermModbus {
             try {
                 int[] holdingRegister;
 
+                float newTemperatureOutdoor;
+                float newTemperatureSupply;
+                float newTemperatureExtract;
+                float newTemperatureExhaust;
+
+                int precision = temperaturePrecision;
+                int scale = (int) Math.pow(10, precision);
+
                 ModbusClient modbusClient = new ModbusClient(ipAddress.getHostAddress(), TCP_PORT);
                 modbusClient.Connect();
 
@@ -301,28 +314,42 @@ public class DanthermModbus {
                 holdingRegister = modbusClient.ReadHoldingRegisters(prmRamIdxT1, 2);
                 logger.debug("Outdoor temperature register values {} and {} read out.", holdingRegister[0],
                         holdingRegister[1]);
-                temperatureOutdoor = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                newTemperatureOutdoor = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                logger.debug("New temperature outdoor = {}", newTemperatureOutdoor);
+                logger.debug("Current temperature outdoor = {}", temperatureOutdoor);
+                if (Math.abs(newTemperatureOutdoor - temperatureOutdoor) > temperatureTreshold) {
+                    temperatureOutdoor = (float) (Math.round(newTemperatureOutdoor * scale)) / scale;
+                }
                 logger.debug("Outdoor temperature value {}", temperatureOutdoor);
 
                 // Read out supply temperature
                 holdingRegister = modbusClient.ReadHoldingRegisters(prmRamIdxT2, 2);
                 logger.debug("Supply temperature register values {} and {} read out.", holdingRegister[0],
                         holdingRegister[1]);
-                temperatureSupply = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                newTemperatureSupply = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                if (Math.abs(newTemperatureSupply - temperatureSupply) > temperatureTreshold) {
+                    temperatureSupply = (float) (Math.round(newTemperatureSupply * scale)) / scale;
+                }
                 logger.debug("Supply temperature value {}", temperatureSupply);
 
                 // Read out extract temperature
                 holdingRegister = modbusClient.ReadHoldingRegisters(prmRamIdxT3, 2);
                 logger.debug("Extract temperature register values {} and {} read out.", holdingRegister[0],
                         holdingRegister[1]);
-                temperatureExtract = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                newTemperatureExtract = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                if (Math.abs(newTemperatureExtract - temperatureExtract) > temperatureTreshold) {
+                    temperatureExtract = (float) (Math.round(newTemperatureExtract * scale)) / scale;
+                }
                 logger.debug("Extract temperature value {}", temperatureExtract);
 
                 // Read out exhaust temperature
                 holdingRegister = modbusClient.ReadHoldingRegisters(prmRamIdxT4, 2);
                 logger.debug("Exhaust temperature register values {} and {} read out.", holdingRegister[0],
                         holdingRegister[1]);
-                temperatureExhaust = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                newTemperatureExhaust = ModbusClient.ConvertRegistersToFloat(holdingRegister, RegisterOrder.HighLow);
+                if (Math.abs(newTemperatureExhaust - temperatureExhaust) > temperatureTreshold) {
+                    temperatureExhaust = (float) (Math.round(newTemperatureExhaust * scale)) / scale;
+                }
                 logger.debug("Exhaust temperature value {}", temperatureExhaust);
 
                 modbusClient.Disconnect();
