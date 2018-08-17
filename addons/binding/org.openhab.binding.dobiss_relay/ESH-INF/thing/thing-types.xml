@@ -26,7 +26,7 @@
 		<config-description>
 			<parameter name="ipAddress" type="text" required="true">
 				<label>IP address</label>
-				<description>IP address of the Dobiss installion to which the relay belongs.</description>
+				<description>IP address of the Dobiss installation to which the relay belongs.</description>
 			</parameter>
 			<parameter name="address" type="integer" required="true">
 				<label>Address</label>
