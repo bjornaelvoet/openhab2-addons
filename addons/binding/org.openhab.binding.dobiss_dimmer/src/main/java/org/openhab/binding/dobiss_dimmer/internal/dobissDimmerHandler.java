@@ -19,7 +19,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +39,8 @@ import org.eclipse.smarthome.core.types.RefreshType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import be.aelvoetnet.dobissmutex.DobissMutex;
+
 /**
  * The {@link dobissDimmerHandler} is responsible for handling commands, which are
  * sent to one of the channels.
@@ -51,9 +52,10 @@ public class dobissDimmerHandler extends BaseThingHandler {
 
     private final Logger logger = LoggerFactory.getLogger(dobissDimmerHandler.class);
 
-    private FileMutex mutex = new FileMutex(Paths.get(System.getProperty("user.home"), ".dobiss.openhab.lock"));
-    // Blocking for 100 ms
-    private long mutex_timeout = 100;
+    // private FileMutex mutex = new FileMutex(Paths.get(System.getProperty("user.home"), ".dobiss.openhab.lock"));
+    //
+    //// Blocking for 100 ms
+    // private long mutex_timeout = 100;
 
     @Nullable
     private dobissDimmerConfiguration config;
@@ -146,7 +148,8 @@ public class dobissDimmerHandler extends BaseThingHandler {
 
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
 
             socket = new Socket(ipAddress, portNumber);
 
@@ -208,15 +211,17 @@ public class dobissDimmerHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss dimer unit");
 
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss dimmer unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss dimer unit");
+
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
 
     }
@@ -260,12 +265,14 @@ public class dobissDimmerHandler extends BaseThingHandler {
         // Check if dobiss dimmer module can be reached
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
+
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             DataInputStream is = new DataInputStream(socket.getInputStream());
-            // Write query of status of the relay
+            // Write query of status of the dimmer
             byte bin[] = new byte[] { -81, 1, -1, (byte) address, 0, 0, 0, 1, 0, -1, -1, -1, -1, -1, -1, -81 };
             byte bout[] = new byte[1024];
             os.write(bin);
@@ -305,15 +312,16 @@ public class dobissDimmerHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss dimmer unit");
 
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss dimmer unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss dimmer unit");
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
 
         // Starting UI pushing
@@ -323,15 +331,17 @@ public class dobissDimmerHandler extends BaseThingHandler {
 
     private void queryDobissDimmer() {
 
-        // Query dobiss dimmer module for status of the individual relays
+        // Query dobiss dimmer module for status of the individual dimmers
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
+
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             DataInputStream is = new DataInputStream(socket.getInputStream());
-            // Write query of status of the relay
+            // Write query of status of the dimmer
             byte bin[] = new byte[] { -81, 1, -1, (byte) address, 0, 0, 0, 1, 0, -1, -1, -1, -1, -1, -1, -81 };
             byte bout[] = new byte[1024];
             os.write(bin);
@@ -368,15 +378,16 @@ public class dobissDimmerHandler extends BaseThingHandler {
             logger.debug("Communication to Dobiss dimmer unit failed!");
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss dimmer unit");
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss dimmer unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss dimmer unit");
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
     }
 

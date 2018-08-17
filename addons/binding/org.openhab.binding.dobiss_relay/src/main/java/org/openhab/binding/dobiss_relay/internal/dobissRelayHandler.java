@@ -19,7 +19,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +39,8 @@ import org.eclipse.smarthome.core.types.RefreshType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import be.aelvoetnet.dobissmutex.DobissMutex;
+
 /**
  * The {@link dobissRelayHandler} is responsible for handling commands, which are
  * sent to one of the channels.
@@ -51,9 +52,9 @@ public class dobissRelayHandler extends BaseThingHandler {
 
     private final Logger logger = LoggerFactory.getLogger(dobissRelayHandler.class);
 
-    private FileMutex mutex = new FileMutex(Paths.get(System.getProperty("user.home"), ".dobiss.openhab.lock"));
-    // Blocking for 100 ms
-    private long mutex_timeout = 100;
+    // private FileMutex mutex = new FileMutex(Paths.get(System.getProperty("user.home"), ".dobiss.openhab.lock"));
+    // // Blocking for 100 ms
+    // private long mutex_timeout = 100;
 
     @Nullable
     private dobissRelayConfiguration config;
@@ -190,7 +191,8 @@ public class dobissRelayHandler extends BaseThingHandler {
 
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
 
             socket = new Socket(ipAddress, portNumber);
 
@@ -275,15 +277,16 @@ public class dobissRelayHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
 
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss relay unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss relay unit");
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
 
     }
@@ -327,7 +330,8 @@ public class dobissRelayHandler extends BaseThingHandler {
         // Check if dobiss relay module can be reached
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -376,15 +380,16 @@ public class dobissRelayHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
 
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss relay unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss relay unit");
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
 
         // Starting UI pushing
@@ -397,7 +402,9 @@ public class dobissRelayHandler extends BaseThingHandler {
         // Query dobiss relay module for status of the individual relays
         Socket socket;
         try {
-            mutex.lock(mutex_timeout);
+            // mutex.lock(mutex_timeout);
+            DobissMutex.lock();
+
             socket = new Socket(ipAddress, portNumber);
 
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -455,15 +462,16 @@ public class dobissRelayHandler extends BaseThingHandler {
             logger.debug("Communication to Dobiss relay unit failed!");
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
                     "Unable to communicate with Dobiss relay unit");
-        } finally {
-            try {
-                mutex.unlock();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
 
-                logger.debug("Internal error: Mutex unlock failed!");
-            }
+            logger.debug("Communication to Dobiss relay unit failed!");
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_INITIALIZING_ERROR,
+                    "Unable to communicate with Dobiss relay unit");
+        } finally {
+            // mutex.unlock();
+            DobissMutex.unlock();
         }
     }
 

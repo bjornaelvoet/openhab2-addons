@@ -1,7 +1,9 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.openhab.binding.dobiss_dimmer
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/be.aelvoetnet.dobissmutex.jar,
+ lib/commons-codec-1.11.jar
 Bundle-ManifestVersion: 2
 Bundle-Name: dobiss_dimmer Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -14,12 +16,18 @@ Import-Package:
  org.eclipse.smarthome.core.library.types,
  org.eclipse.smarthome.core.thing,
  org.eclipse.smarthome.core.thing.binding,
- org.eclipse.smarthome.core.thing.binding.builder,
- org.eclipse.smarthome.core.thing.type,
  org.eclipse.smarthome.core.types,
- org.eclipse.smarthome.core.util,
  org.slf4j
 Service-Component: OSGI-INF/*.xml
 Require-Bundle: com.google.guava,
  org.apache.commons.codec,
  org.apache.commons.lang
+Export-Package: be.aelvoetnet.dobissmutex,
+ org.apache.commons.codec,
+ org.apache.commons.codec.binary,
+ org.apache.commons.codec.cli,
+ org.apache.commons.codec.digest,
+ org.apache.commons.codec.language,
+ org.apache.commons.codec.language.bm,
+ org.apache.commons.codec.net,
+ org.openhab.binding.dobiss_dimmer.internal;x-internal:=true
