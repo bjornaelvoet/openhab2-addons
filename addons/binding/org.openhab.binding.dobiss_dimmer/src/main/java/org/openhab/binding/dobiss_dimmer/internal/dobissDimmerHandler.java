@@ -28,7 +28,7 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.smarthome.core.library.types.DecimalType;
+import org.eclipse.smarthome.core.library.types.PercentType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -111,19 +111,19 @@ public class dobissDimmerHandler extends BaseThingHandler {
             switch (id) {
                 case 1:
                     logger.debug("Dobiss dimmer value for id01 {}", id01);
-                    updateState(CHANNEL_DOBISS_DIMMER_ID_1, DecimalType.valueOf(Integer.toString(id01)));
+                    updateState(CHANNEL_DOBISS_DIMMER_ID_1, PercentType.valueOf(Integer.toString(id01)));
                     break;
                 case 2:
                     logger.debug("Dobiss dimmer value for id02 {}", id02);
-                    updateState(CHANNEL_DOBISS_DIMMER_ID_2, DecimalType.valueOf(Integer.toString(id02)));
+                    updateState(CHANNEL_DOBISS_DIMMER_ID_2, PercentType.valueOf(Integer.toString(id02)));
                     break;
                 case 3:
                     logger.debug("Dobiss dimmer value for id03 {}", id03);
-                    updateState(CHANNEL_DOBISS_DIMMER_ID_3, DecimalType.valueOf(Integer.toString(id03)));
+                    updateState(CHANNEL_DOBISS_DIMMER_ID_3, PercentType.valueOf(Integer.toString(id03)));
                     break;
                 case 4:
                     logger.debug("Dobiss dimmer value for id04 {}", id04);
-                    updateState(CHANNEL_DOBISS_DIMMER_ID_4, DecimalType.valueOf(Integer.toString(id04)));
+                    updateState(CHANNEL_DOBISS_DIMMER_ID_4, PercentType.valueOf(Integer.toString(id04)));
                     break;
                 default:
                     logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
@@ -154,7 +154,7 @@ public class dobissDimmerHandler extends BaseThingHandler {
             DataInputStream is = new DataInputStream(socket.getInputStream());
             // Write header first
             // Dimmer type = 0x10 = 16
-            byte bin[] = new byte[] { -81, 2, 16, (byte) address, 0, 0, 8, 1, 8, -1, -1, -1, -1, -1, -1, -81 };
+            byte bin[] = new byte[] { -81, 2, -1, (byte) address, 0, 0, 8, 1, 8, -1, -1, -1, -1, -1, -1, -81 };
             byte bout[] = new byte[1024];
             os.write(bin);
             logger.debug("Dobiss dimmer header send {}", Hex.encodeHexString(bin));
@@ -162,7 +162,7 @@ public class dobissDimmerHandler extends BaseThingHandler {
             is.read(bout, 0, 32);
             logger.debug("Dobiss dimmer header answer {}", Hex.encodeHexString(bout));
 
-            byte bin2[] = new byte[] { (byte) address, (byte) (id - 1), (byte) dimmerValue, -1, -1, 0x64, -1, -1 };
+            byte bin2[] = new byte[] { (byte) address, (byte) (id - 1), 1, -1, -1, (byte) dimmerValue, -1, -1 };
             byte bout2[] = new byte[1024];
             os.write(bin2);
             logger.debug("Dobiss dimmer command send {}", Hex.encodeHexString(bin2));
@@ -386,19 +386,19 @@ public class dobissDimmerHandler extends BaseThingHandler {
         String channelID = channelUID.getId();
         switch (channelID) {
             case CHANNEL_DOBISS_DIMMER_ID_1:
-                updateState(CHANNEL_DOBISS_DIMMER_ID_1, DecimalType.valueOf(Integer.toString(id01)));
+                updateState(CHANNEL_DOBISS_DIMMER_ID_1, PercentType.valueOf(Integer.toString(id01)));
                 logger.debug("Update status for id01 {}", id01);
                 break;
             case CHANNEL_DOBISS_DIMMER_ID_2:
-                updateState(CHANNEL_DOBISS_DIMMER_ID_2, DecimalType.valueOf(Integer.toString(id02)));
+                updateState(CHANNEL_DOBISS_DIMMER_ID_2, PercentType.valueOf(Integer.toString(id02)));
                 logger.debug("Update status for id02 {}", id02);
                 break;
             case CHANNEL_DOBISS_DIMMER_ID_3:
-                updateState(CHANNEL_DOBISS_DIMMER_ID_3, DecimalType.valueOf(Integer.toString(id03)));
+                updateState(CHANNEL_DOBISS_DIMMER_ID_3, PercentType.valueOf(Integer.toString(id03)));
                 logger.debug("Update status for id03 {}", id03);
                 break;
             case CHANNEL_DOBISS_DIMMER_ID_4:
-                updateState(CHANNEL_DOBISS_DIMMER_ID_4, DecimalType.valueOf(Integer.toString(id04)));
+                updateState(CHANNEL_DOBISS_DIMMER_ID_4, PercentType.valueOf(Integer.toString(id04)));
                 logger.debug("Update status for id04 {}", id04);
                 break;
             default:
