@@ -4,29 +4,71 @@
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<label>Dobiss Binding Thing</label>
-		<description>Sample thing for Dobiss Binding</description>
+	<thing-type id="domotics">
+		<label>Dobiss domotics system</label>
+		<description>Allows to control Dobiss modules like relays and dimmer</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel" />
+            <channel id="relay01_channel1" typeId="relay_channel" />
+            <channel id="relay01_channel2" typeId="relay_channel" />
+            <channel id="relay01_channel3" typeId="relay_channel" />
+            <channel id="relay01_channel4" typeId="relay_channel" />
+            <channel id="relay01_channel5" typeId="relay_channel" />
+            <channel id="relay01_channel6" typeId="relay_channel" />
+            <channel id="relay01_channel7" typeId="relay_channel" />
+            <channel id="relay01_channel8" typeId="relay_channel" />
+            <channel id="relay01_channel9" typeId="relay_channel" />
+            <channel id="relay01_channel10" typeId="relay_channel" />
+            <channel id="relay01_channel11" typeId="relay_channel" />
+            <channel id="relay01_channel12" typeId="relay_channel" />
+            <channel id="relay02_channel1" typeId="relay_channel" />
+            <channel id="relay02_channel2" typeId="relay_channel" />
+            <channel id="relay02_channel3" typeId="relay_channel" />
+            <channel id="relay02_channel4" typeId="relay_channel" />
+            <channel id="relay02_channel5" typeId="relay_channel" />
+            <channel id="relay02_channel6" typeId="relay_channel" />
+            <channel id="relay02_channel7" typeId="relay_channel" />
+            <channel id="relay02_channel8" typeId="relay_channel" />
+            <channel id="relay02_channel9" typeId="relay_channel" />
+            <channel id="relay02_channel10" typeId="relay_channel" />
+            <channel id="relay02_channel11" typeId="relay_channel" />
+            <channel id="relay02_channel12" typeId="relay_channel" />
+            <channel id="dimmer01_channel1" typeId="dimmer_channel" />
+            <channel id="dimmer01_channel2" typeId="dimmer_channel" />
+            <channel id="dimmer01_channel3" typeId="dimmer_channel" />
+            <channel id="dimmer01_channel4" typeId="dimmer_channel" />
+            <channel id="dimmer02_channel1" typeId="dimmer_channel" />
+            <channel id="dimmer02_channel2" typeId="dimmer_channel" />
+            <channel id="dimmer02_channel3" typeId="dimmer_channel" />
+            <channel id="dimmer02_channel4" typeId="dimmer_channel" />
 		</channels>
 
 		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample parameter</label>
-				<description>This is a sample text configuration parameter.</description>
-			</parameter>
+            <parameter name="ipAddress" type="text" required="true">
+                <label>IP address</label>
+                <description>IP address of the Dobiss installation to which the dimmer belongs.</description>
+            </parameter>
+            <parameter name="pollingInterval" type="integer" required="true">
+                <label>Polling interval</label>
+                <description>Interval (in seconds) for which the Dobiss dimmer module needs to fetch information.</description>
+            </parameter>
+            <parameter name="addressRelay01" type="integer" required="true">
+                <label>Address</label>
+                <description>Address given to the relay01 module.</description>
+            </parameter>
+            <parameter name="addressRelay02" type="integer" required="true">
+                <label>Address</label>
+                <description>Address given to the relay02 module.</description>
+            </parameter>
+            <parameter name="addressDimmer01" type="integer" required="true">
+                <label>Address</label>
+                <description>Address given to the dimmer01 module.</description>
+            </parameter>
+            <parameter name="addressDimmer02" type="integer" required="true">
+                <label>Address</label>
+                <description>Address given to the dimmer02 module.</description>
+            </parameter>
 		</config-description>
 
 	</thing-type>
-
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>dobissItem</item-type>
-		<label>Dobiss Binding Channel</label>
-		<description>Sample channel for Dobiss Binding</description>
-	</channel-type>
-
 </thing:thing-descriptions>

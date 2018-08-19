@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="dobiss"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+    xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+    <channel-type id="relay_channel">
+        <item-type>Switch</item-type>
+        <label>Dobiss relay channel</label>
+        <description>Dobiss relay channel</description>
+    </channel-type>
+
+    <channel-type id="dimmer_channel">
+        <item-type>Dimmer</item-type>
+        <label>Dobiss dimmer channel</label>
+        <description>Dobiss dimmer channel</description>
+    </channel-type>
+
+</thing:thing-descriptions>

@@ -19,8 +19,12 @@ package org.openhab.binding.dobiss.internal;
  */
 public class DobissConfiguration {
 
-    /**
-     * Sample configuration parameter. Replace with your own.
-     */
-    public String config1;
+    public String ipAddress;
+
+    public int addressRelay01 = -1;
+    public int addressRelay02 = -1;
+    public int addressDimmer01 = -1;
+    public int addressDimmer02 = -1;
+
+    public int pollingInterval;
 }
