@@ -17,6 +17,12 @@
             <channel id="temperature2" typeId="temperature" />
             <channel id="temperature3" typeId="temperature" />
             <channel id="temperature4" typeId="temperature" />
+            <channel id="relative-humidity" typeId="number" />
+            <channel id="relative-humidity-setpoint" typeId="number" />
+            <channel id="voc" typeId="number" />
+            <channel id="co2" typeId="number" />
+            <channel id="fan-rpm1" typeId="number" />
+            <channel id="fan-rpm2" typeId="number" />            
 		</channels>
 
 		<config-description>
@@ -57,5 +63,11 @@
         <label>Unit mode</label>
         <description>Unit mode</description>
     </channel-type>
-    
+
+    <channel-type id="number">
+        <item-type>Number</item-type>
+        <label>Number</label>
+        <description>Number</description>
+    </channel-type>
+        
 </thing:thing-descriptions>

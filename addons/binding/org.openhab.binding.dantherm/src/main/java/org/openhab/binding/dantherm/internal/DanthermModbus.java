@@ -61,8 +61,8 @@ public class DanthermModbus {
 
     public int speedLevelFan;
 
-    public int fan1rpm;
-    public int fan2rpm;
+    public float fan1rpm;
+    public float fan2rpm;
 
     public float temperatureOutdoor;
     public float temperatureSupply;
@@ -77,6 +77,13 @@ public class DanthermModbus {
     public int currentUnitMode;
     public int activeUnitMode;
 
+    public int relativeHumidity;
+    public int relativeHumiditySetpoint;
+
+    public int voc;
+
+    public int co2;
+
     // Internal const values used for communication with HCV5
     private static final int TCP_PORT = 502;
 
@@ -86,30 +93,41 @@ public class DanthermModbus {
     // Switch position A/B (is fan1/fan2 for inlet/exhaust or vice versa)
     // If left is one => postion A => fan1 is extract and fan 2 is supply
     // If right is one => position B => fan1 is supply and fan2 is extract
-    private static final int prmHALLeft = 85;
-    private static final int prmHALRight = 87;
+    private static final int prmHALLeft = 83;
+    private static final int prmHALRight = 85;
 
     // Outdoor temperature (air going into building before exchange heater)
-    private static final int prmRamIdxT1 = 133;
+    private static final int prmRamIdxT1 = 131;
     // Supply temperature (air going into building after exchange heater)
-    private static final int prmRamIdxT2 = 135;
+    private static final int prmRamIdxT2 = 133;
     // Extract temperature (air going outside of building before exchange heater)
-    private static final int prmRamIdxT3 = 137;
+    private static final int prmRamIdxT3 = 135;
     // Exhaust temperature (air going outside of building after exchange heater )
-    private static final int prmRamIdxT4 = 139;
+    private static final int prmRamIdxT4 = 137;
 
     // Speed level of fans (0 to 4); in manual mode this can be set; in other modes read only
-    private static final int prmRomIdxSpeedLevel = 324;
+    private static final int prmRomIdxSpeedLevel = 323;
     // Fan1 RPM
-    private static final int prmHALTaho1 = 101;
+    private static final int prmHALTaho1 = 99;
     // Fan2 RPM
-    private static final int prmHALTaho2 = 103;
+    private static final int prmHALTaho2 = 101;
 
     // Current unit mode (read-only)
-    private static final int prmCurrentBLState = 472;
+    private static final int prmCurrentBLState = 471;
 
     // Active unit mode (writable)
-    private static final int prmRamIdxUnitMode = 168;
+    private static final int prmRamIdxUnitMode = 167;
+
+    // Relative humidity (read-only)
+    private static final int prmRamIdxRh3Corrected = 195;
+    // Relative humidity set-point
+    private static final int prmRomIdxRhSetPoint = 339;
+
+    // VOC (read-only)
+    private static final int prmVOC = 429;
+
+    // CO2 (read-only)
+    private static final int prmHACCO2Val = 573;
 
     public DanthermModbus(InetAddress ipAddress, int pollingInterval) throws Exception {
 
@@ -189,8 +207,8 @@ public class DanthermModbus {
     public void setFanSpeed(int value) {
         int[] holdingRegister = new int[2];
 
-        holdingRegister[0] = value;
-        holdingRegister[1] = 0;
+        holdingRegister[0] = 0;
+        holdingRegister[1] = value;
 
         logger.debug("Writing fan speed {}", value);
 
@@ -220,8 +238,8 @@ public class DanthermModbus {
     public void setActiveUnitMode(int value) {
         int[] holdingRegister = new int[2];
 
-        holdingRegister[0] = value;
-        holdingRegister[1] = 0;
+        holdingRegister[0] = 0;
+        holdingRegister[1] = value;
 
         logger.debug("Writing active unit mode {}", value);
 
@@ -248,9 +266,9 @@ public class DanthermModbus {
         }
     }
 
-    private int convertHCV5IntsToInt(int InLow, int InHigh) {
+    private int convertHCV5IntsToInt(int InHigh, int InLow) {
         // Register read in for HCV5 is 16 bit per register; low first (lower address) then high (higher address)
-        return ((InHigh & 0xFFFF0000) | (InLow & 0x0000FFFF));
+        return ((InLow & 0x0000FFFF) | (InHigh & 0xFFFF0000));
     }
 
     class PeriodicTask extends TimerTask {
@@ -351,6 +369,32 @@ public class DanthermModbus {
                     temperatureExhaust = (float) (Math.round(newTemperatureExhaust * scale)) / scale;
                 }
                 logger.debug("Exhaust temperature value {}", temperatureExhaust);
+
+                // Read out relative humidity
+                holdingRegister = modbusClient.ReadHoldingRegisters(prmRamIdxRh3Corrected, 2);
+                logger.debug("Relative humidity register values {} and {} read out.", holdingRegister[0],
+                        holdingRegister[1]);
+                relativeHumidity = convertHCV5IntsToInt(holdingRegister[0], holdingRegister[1]);
+                logger.debug("Relative humidity value {}", relativeHumidity);
+
+                // Read out relative humidity setpoint
+                holdingRegister = modbusClient.ReadHoldingRegisters(prmRomIdxRhSetPoint, 2);
+                logger.debug("Relative humidity register setpoint values {} and {} read out.", holdingRegister[0],
+                        holdingRegister[1]);
+                relativeHumiditySetpoint = convertHCV5IntsToInt(holdingRegister[0], holdingRegister[1]);
+                logger.debug("Relative humidity setpint value {}", relativeHumiditySetpoint);
+
+                // Read out voc
+                holdingRegister = modbusClient.ReadHoldingRegisters(prmVOC, 2);
+                logger.debug("VOC register values {} and {} read out.", holdingRegister[0], holdingRegister[1]);
+                voc = convertHCV5IntsToInt(holdingRegister[0], holdingRegister[1]);
+                logger.debug("VOC value {}", voc);
+
+                // Read out co2
+                holdingRegister = modbusClient.ReadHoldingRegisters(prmHACCO2Val, 2);
+                logger.debug("CO2 register values {} and {} read out.", holdingRegister[0], holdingRegister[1]);
+                voc = convertHCV5IntsToInt(holdingRegister[0], holdingRegister[1]);
+                logger.debug("CO2 value {}", co2);
 
                 modbusClient.Disconnect();
             } catch (IOException e) {

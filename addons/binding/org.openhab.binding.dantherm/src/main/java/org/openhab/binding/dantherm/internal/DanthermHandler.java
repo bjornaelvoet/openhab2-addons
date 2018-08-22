@@ -167,10 +167,40 @@ public class DanthermHandler extends BaseThingHandler {
             case CHANNEL_HCV5_ACTIVE_UNITMODE:
                 publishHCV5ActiveUnitMode(channelUID);
                 break;
+            case CHANNEL_HCV5_RH:
+                publishHCV5RelativeHumidity(channelUID);
+                break;
+            case CHANNEL_HCV5_RH_SETPOINT:
+                publishHCV5RelativeHumiditySetpoint(channelUID);
+                break;
+            case CHANNEL_HCV5_VOC:
+                publishHCV5VOC(channelUID);
+                break;
+            case CHANNEL_HCV5_CO2:
+                publishHCV5CO2(channelUID);
+                break;
+            case CHANNEL_HCV5_FANRPM1:
+                publishHCV5FanRPM1(channelUID);
+                break;
+            case CHANNEL_HCV5_FANRPM2:
+                publishHCV5FanRPM2(channelUID);
+                break;
             default:
                 logger.debug("Can not update channel with ID : {} - channel name might be wrong!", channelID);
                 break;
         }
+    }
+
+    @SuppressWarnings("null")
+    private void publishHCV5FanRPM1(ChannelUID channelUID) {
+        logger.debug("Publishing fan rpm1");
+        updateState(CHANNEL_HCV5_FANRPM1, DecimalType.valueOf(Float.toString(danthermModbus.fan1rpm)));
+    }
+
+    @SuppressWarnings("null")
+    private void publishHCV5FanRPM2(ChannelUID channelUID) {
+        logger.debug("Publishing fan rpm2");
+        updateState(CHANNEL_HCV5_FANRPM2, DecimalType.valueOf(Float.toString(danthermModbus.fan2rpm)));
     }
 
     @SuppressWarnings("null")
@@ -216,6 +246,31 @@ public class DanthermHandler extends BaseThingHandler {
         updateState(CHANNEL_HCV5_ACTIVE_UNITMODE, DecimalType.valueOf(Integer.toString(danthermModbus.activeUnitMode)));
     }
 
+    @SuppressWarnings("null")
+    private void publishHCV5RelativeHumidity(ChannelUID channelUID) {
+        logger.debug("Publishing relative humidity");
+        updateState(CHANNEL_HCV5_RH, DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumidity)));
+    }
+
+    @SuppressWarnings("null")
+    private void publishHCV5RelativeHumiditySetpoint(ChannelUID channelUID) {
+        logger.debug("Publishing relative humidity setpoint");
+        updateState(CHANNEL_HCV5_RH_SETPOINT,
+                DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumiditySetpoint)));
+    }
+
+    @SuppressWarnings("null")
+    private void publishHCV5VOC(ChannelUID channelUID) {
+        logger.debug("Publishing VOC");
+        updateState(CHANNEL_HCV5_VOC, DecimalType.valueOf(Integer.toString(danthermModbus.voc)));
+    }
+
+    @SuppressWarnings("null")
+    private void publishHCV5CO2(ChannelUID channelUID) {
+        logger.debug("Publishing CO2");
+        updateState(CHANNEL_HCV5_CO2, DecimalType.valueOf(Integer.toString(danthermModbus.co2)));
+    }
+
     @Override
     public void handleUpdate(ChannelUID channelUID, State newState) {
         // TODO Auto-generated method stub
@@ -228,7 +283,7 @@ public class DanthermHandler extends BaseThingHandler {
     public void thingUpdated(Thing thing) {
         // TODO Auto-generated method stub
         // super.thingUpdated(thing);
-        logger.debug("DanthermHandler thingUpdated TODO");
+        logger.error("DanthermHandler thingUpdated TODO");
     }
 
     @Override
@@ -255,8 +310,123 @@ public class DanthermHandler extends BaseThingHandler {
             handleHCV5Temp3(command);
         } else if (channelUID.getId().equals(CHANNEL_HCV5_TEMPERATURE4)) {
             handleHCV5Temp4(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_RH)) {
+            handleHCV5RelativeHumidity(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_RH_SETPOINT)) {
+            handleHCV5RelativeHumiditySetpoint(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_VOC)) {
+            handleHCV5VOC(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_CO2)) {
+            handleHCV5CO2(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_FANRPM1)) {
+            handleHCV5FanRPM1(command);
+        } else if (channelUID.getId().equals(CHANNEL_HCV5_FANRPM2)) {
+            handleHCV5FanRPM2(command);
         } else {
             logger.debug("Received command for {} on unknown channel {}", thing.getUID(), channelUID.getId());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5FanRPM1(Command command) {
+        logger.debug("Handling command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_FANRPM1, DecimalType.valueOf("2000.0"));
+
+            } else {
+                updateState(CHANNEL_HCV5_FANRPM1, DecimalType.valueOf(Float.toString(danthermModbus.fan1rpm)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5FanRPM2(Command command) {
+        logger.debug("Handling command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_FANRPM2, DecimalType.valueOf("2005.0"));
+
+            } else {
+                updateState(CHANNEL_HCV5_FANRPM2, DecimalType.valueOf(Float.toString(danthermModbus.fan2rpm)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5CO2(Command command) {
+        logger.debug("Handling HCV5 CO2 command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_CO2, DecimalType.valueOf("40"));
+
+            } else {
+                updateState(CHANNEL_HCV5_CO2, DecimalType.valueOf(Integer.toString(danthermModbus.co2)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5VOC(Command command) {
+        logger.debug("Handling HCV5 VOC command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_VOC, DecimalType.valueOf("40"));
+
+            } else {
+                updateState(CHANNEL_HCV5_VOC, DecimalType.valueOf(Integer.toString(danthermModbus.voc)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5RelativeHumidity(Command command) {
+        logger.debug("Handling HCV5 relative humidity command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_RH, DecimalType.valueOf("40"));
+
+            } else {
+                updateState(CHANNEL_HCV5_RH, DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumidity)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
+        }
+    }
+
+    @SuppressWarnings("null")
+    private void handleHCV5RelativeHumiditySetpoint(Command command) {
+        logger.debug("Handling HCV5 relative humidity setpoint command for {}: {}", thing.getUID(), command);
+
+        if (command instanceof RefreshType) {
+            if (simulationMode) {
+                // Just fake a temperature
+                updateState(CHANNEL_HCV5_RH_SETPOINT, DecimalType.valueOf("50"));
+
+            } else {
+                updateState(CHANNEL_HCV5_RH_SETPOINT,
+                        DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumiditySetpoint)));
+            }
+        } else {
+            logger.debug("Command {} not implemented for thing {}", command, thing.getUID());
         }
     }
 
@@ -270,7 +440,7 @@ public class DanthermHandler extends BaseThingHandler {
                 updateState(CHANNEL_HCV5_FANSPEED, DecimalType.valueOf("2"));
 
             } else {
-                updateState(CHANNEL_HCV5_FANSPEED, DecimalType.valueOf(Float.toString(danthermModbus.speedLevelFan)));
+                updateState(CHANNEL_HCV5_FANSPEED, DecimalType.valueOf(Integer.toString(danthermModbus.speedLevelFan)));
             }
         } else {
             if (simulationMode) {

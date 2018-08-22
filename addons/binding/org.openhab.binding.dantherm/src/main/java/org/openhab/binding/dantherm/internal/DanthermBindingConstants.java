@@ -47,6 +47,16 @@ public class DanthermBindingConstants {
     public static final String CHANNEL_HCV5_TEMPERATURE3 = "temperature3";
     public static final String CHANNEL_HCV5_TEMPERATURE4 = "temperature4";
 
+    public static final String CHANNEL_HCV5_RH = "relative-humidity";
+    public static final String CHANNEL_HCV5_RH_SETPOINT = "relative-humidity-setpoint";
+
+    public static final String CHANNEL_HCV5_VOC = "voc";
+
+    public static final String CHANNEL_HCV5_CO2 = "co2";
+
+    public static final String CHANNEL_HCV5_FANRPM1 = "fan-rpm1";
+    public static final String CHANNEL_HCV5_FANRPM2 = "fan-rpm2";
+
     // IP network address of the hcv5
     public static final String THING_PROPERTY_IP = "ipAddress";
     // Simulation mode for the hcv5
