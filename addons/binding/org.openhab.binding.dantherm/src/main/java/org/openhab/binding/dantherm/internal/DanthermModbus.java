@@ -207,15 +207,16 @@ public class DanthermModbus {
     public void setFanSpeed(int value) {
         int[] holdingRegister = new int[2];
 
-        holdingRegister[0] = 0;
-        holdingRegister[1] = value;
+        holdingRegister[0] = value;
+        holdingRegister[1] = 0;
 
         logger.debug("Writing fan speed {}", value);
 
         try {
             ModbusClient modbusClient = new ModbusClient(ipAddress.getHostAddress(), TCP_PORT);
             modbusClient.Connect();
-            modbusClient.WriteMultipleRegisters(prmRomIdxSpeedLevel, holdingRegister);
+            // TODO Why do we need the +1 offset in order to have the hvc5 behave correctly?
+            modbusClient.WriteMultipleRegisters(prmRomIdxSpeedLevel + 1, holdingRegister);
             modbusClient.Disconnect();
 
             logger.debug("Fan speed successfully written");
@@ -224,13 +225,13 @@ public class DanthermModbus {
             speedLevelFan = value;
 
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         } catch (ModbusException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         }
     }
@@ -238,15 +239,16 @@ public class DanthermModbus {
     public void setActiveUnitMode(int value) {
         int[] holdingRegister = new int[2];
 
-        holdingRegister[0] = 0;
-        holdingRegister[1] = value;
+        holdingRegister[0] = value;
+        holdingRegister[1] = 0;
 
         logger.debug("Writing active unit mode {}", value);
 
         try {
             ModbusClient modbusClient = new ModbusClient(ipAddress.getHostAddress(), TCP_PORT);
             modbusClient.Connect();
-            modbusClient.WriteMultipleRegisters(prmRamIdxUnitMode, holdingRegister);
+            // TODO Why do we need the +1 offset in order to have the hvc5 behave correctly?
+            modbusClient.WriteMultipleRegisters(prmRamIdxUnitMode + 1, holdingRegister);
             modbusClient.Disconnect();
 
             logger.debug("Active unit mode {} successfully written", value);
@@ -255,13 +257,13 @@ public class DanthermModbus {
             activeUnitMode = value;
 
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         } catch (ModbusException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             logger.error(e.getMessage());
         }
     }
