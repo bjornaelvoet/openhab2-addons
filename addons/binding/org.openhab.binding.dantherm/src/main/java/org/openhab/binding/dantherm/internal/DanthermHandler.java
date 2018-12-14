@@ -57,6 +57,21 @@ public class DanthermHandler extends BaseThingHandler {
 
     private boolean simulationMode = false;
 
+    // Caching values to avoid unnecessary updates
+    private float HCV5Fan1RPM = (float) -1.1;
+    private float HCV5Fan2RPM = (float) -1.1;
+    private float HCV5Temperature1 = (float) -99.99;
+    private float HCV5Temperature2 = (float) -99.99;
+    private float HCV5Temperature3 = (float) -99.99;
+    private float HCV5Temperature4 = (float) -99.99;
+    private int HCV5FanSpeed = -1;
+    private int HCV5CurrentUnitMode = -1;
+    private int HCV5ActiveUnitMode = -1;
+    private int HCV5RelativeHumidity = -1;
+    private int HCV5RelativeHumiditySetPoint = -1;
+    private int HCV5VOC = -1;
+    private int HCV5CO2 = -1;
+
     @Nullable
     private DanthermConfiguration config = null;
 
@@ -194,81 +209,151 @@ public class DanthermHandler extends BaseThingHandler {
     @SuppressWarnings("null")
     private void publishHCV5FanRPM1(ChannelUID channelUID) {
         logger.debug("Publishing fan rpm1");
-        updateState(CHANNEL_HCV5_FANRPM1, DecimalType.valueOf(Float.toString(danthermModbus.fan1rpm)));
+
+        // Only update when changed
+        if (HCV5Fan1RPM != danthermModbus.fan1rpm) {
+            updateState(CHANNEL_HCV5_FANRPM1, DecimalType.valueOf(Float.toString(danthermModbus.fan1rpm)));
+            HCV5Fan1RPM = danthermModbus.fan1rpm;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5FanRPM2(ChannelUID channelUID) {
         logger.debug("Publishing fan rpm2");
-        updateState(CHANNEL_HCV5_FANRPM2, DecimalType.valueOf(Float.toString(danthermModbus.fan2rpm)));
+
+        if (HCV5Fan2RPM != danthermModbus.fan2rpm) {
+            updateState(CHANNEL_HCV5_FANRPM2, DecimalType.valueOf(Float.toString(danthermModbus.fan2rpm)));
+            HCV5Fan2RPM = danthermModbus.fan2rpm;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5Temperature1(ChannelUID channelUID) {
         logger.debug("Publishing temperature1");
-        updateState(CHANNEL_HCV5_TEMPERATURE1, DecimalType.valueOf(Float.toString(danthermModbus.temperatureOutdoor)));
+
+        // Only update when changed
+        if (danthermModbus.temperatureOutdoor != HCV5Temperature1) {
+            updateState(CHANNEL_HCV5_TEMPERATURE1,
+                    DecimalType.valueOf(Float.toString(danthermModbus.temperatureOutdoor)));
+            HCV5Temperature1 = danthermModbus.temperatureOutdoor;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5Temperature2(ChannelUID channelUID) {
         logger.debug("Publishing temperature2");
-        updateState(CHANNEL_HCV5_TEMPERATURE2, DecimalType.valueOf(Float.toString(danthermModbus.temperatureSupply)));
+
+        // Only update when changed
+        if (danthermModbus.temperatureSupply != HCV5Temperature2) {
+            updateState(CHANNEL_HCV5_TEMPERATURE2,
+                    DecimalType.valueOf(Float.toString(danthermModbus.temperatureSupply)));
+            HCV5Temperature2 = danthermModbus.temperatureSupply;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5Temperature3(ChannelUID channelUID) {
         logger.debug("Publishing temperature3");
-        updateState(CHANNEL_HCV5_TEMPERATURE3, DecimalType.valueOf(Float.toString(danthermModbus.temperatureExtract)));
+
+        // Only update when changed
+        if (danthermModbus.temperatureExtract != HCV5Temperature3) {
+            updateState(CHANNEL_HCV5_TEMPERATURE3,
+                    DecimalType.valueOf(Float.toString(danthermModbus.temperatureExtract)));
+            HCV5Temperature3 = danthermModbus.temperatureExtract;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5Temperature4(ChannelUID channelUID) {
         logger.debug("Publishing temperature4");
-        updateState(CHANNEL_HCV5_TEMPERATURE4, DecimalType.valueOf(Float.toString(danthermModbus.temperatureExhaust)));
+
+        // Only update when changed
+        if (danthermModbus.temperatureExhaust != HCV5Temperature4) {
+            updateState(CHANNEL_HCV5_TEMPERATURE4,
+                    DecimalType.valueOf(Float.toString(danthermModbus.temperatureExhaust)));
+            HCV5Temperature4 = danthermModbus.temperatureExhaust;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5FanSpeed(ChannelUID channelUID) {
         logger.debug("Publishing fan speed");
-        updateState(CHANNEL_HCV5_FANSPEED, DecimalType.valueOf(Integer.toString(danthermModbus.speedLevelFan)));
+
+        // Only update when changed
+        if (danthermModbus.speedLevelFan != HCV5FanSpeed) {
+            updateState(CHANNEL_HCV5_FANSPEED, DecimalType.valueOf(Integer.toString(danthermModbus.speedLevelFan)));
+            HCV5FanSpeed = danthermModbus.speedLevelFan;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5CurrentUnitMode(ChannelUID channelUID) {
         logger.debug("Publishing current unit mode");
-        updateState(CHANNEL_HCV5_CURRENT_UNITMODE,
-                DecimalType.valueOf(Integer.toString(danthermModbus.currentUnitMode)));
+
+        // Only update when changed
+        if (danthermModbus.currentUnitMode != HCV5CurrentUnitMode) {
+            updateState(CHANNEL_HCV5_CURRENT_UNITMODE,
+                    DecimalType.valueOf(Integer.toString(danthermModbus.currentUnitMode)));
+            HCV5CurrentUnitMode = danthermModbus.currentUnitMode;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5ActiveUnitMode(ChannelUID channelUID) {
         logger.debug("Publishing active unit mode");
-        updateState(CHANNEL_HCV5_ACTIVE_UNITMODE, DecimalType.valueOf(Integer.toString(danthermModbus.activeUnitMode)));
+
+        // Only update when changed
+        if (danthermModbus.activeUnitMode != HCV5ActiveUnitMode) {
+            updateState(CHANNEL_HCV5_ACTIVE_UNITMODE,
+                    DecimalType.valueOf(Integer.toString(danthermModbus.activeUnitMode)));
+            HCV5ActiveUnitMode = danthermModbus.activeUnitMode;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5RelativeHumidity(ChannelUID channelUID) {
         logger.debug("Publishing relative humidity");
-        updateState(CHANNEL_HCV5_RH, DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumidity)));
+
+        // Only update when changed
+        if (HCV5RelativeHumidity != danthermModbus.relativeHumidity) {
+            updateState(CHANNEL_HCV5_RH, DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumidity)));
+            HCV5RelativeHumidity = danthermModbus.relativeHumidity;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5RelativeHumiditySetpoint(ChannelUID channelUID) {
         logger.debug("Publishing relative humidity setpoint");
-        updateState(CHANNEL_HCV5_RH_SETPOINT,
-                DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumiditySetpoint)));
+
+        // Only update when changed
+        if (HCV5RelativeHumiditySetPoint != danthermModbus.relativeHumiditySetpoint) {
+            updateState(CHANNEL_HCV5_RH_SETPOINT,
+                    DecimalType.valueOf(Integer.toString(danthermModbus.relativeHumiditySetpoint)));
+            HCV5RelativeHumiditySetPoint = danthermModbus.relativeHumiditySetpoint;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5VOC(ChannelUID channelUID) {
         logger.debug("Publishing VOC");
-        updateState(CHANNEL_HCV5_VOC, DecimalType.valueOf(Integer.toString(danthermModbus.voc)));
+
+        // Only update when changed
+        if (HCV5VOC != danthermModbus.voc) {
+            updateState(CHANNEL_HCV5_VOC, DecimalType.valueOf(Integer.toString(danthermModbus.voc)));
+            HCV5VOC = danthermModbus.voc;
+        }
     }
 
     @SuppressWarnings("null")
     private void publishHCV5CO2(ChannelUID channelUID) {
         logger.debug("Publishing CO2");
-        updateState(CHANNEL_HCV5_CO2, DecimalType.valueOf(Integer.toString(danthermModbus.co2)));
+
+        // Only update when changed
+        if (HCV5CO2 != danthermModbus.co2) {
+            updateState(CHANNEL_HCV5_CO2, DecimalType.valueOf(Integer.toString(danthermModbus.co2)));
+            HCV5CO2 = danthermModbus.co2;
+        }
+
     }
 
     @Override
