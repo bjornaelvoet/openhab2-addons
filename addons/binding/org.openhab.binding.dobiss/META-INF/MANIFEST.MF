@@ -9,7 +9,7 @@ Bundle-Name: Dobiss Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-SymbolicName: org.openhab.binding.dobiss;singleton:=true
 Bundle-Vendor: openHAB
-Bundle-Version: 1.0.0.0
+Bundle-Version: 1.0.1.0
 Import-Package: 
  org.eclipse.jdt.annotation;resolution:=optional,
  org.eclipse.smarthome.config.core,

@@ -59,6 +59,40 @@ public class DobissHandler extends BaseThingHandler {
     // Delay of the internal timer in ms
     private int pollingDelay = 500;
 
+    // Caching variables
+    private int dobissRelay01Id01 = -1;
+    private int dobissRelay01Id02 = -1;
+    private int dobissRelay01Id03 = -1;
+    private int dobissRelay01Id04 = -1;
+    private int dobissRelay01Id05 = -1;
+    private int dobissRelay01Id06 = -1;
+    private int dobissRelay01Id07 = -1;
+    private int dobissRelay01Id08 = -1;
+    private int dobissRelay01Id09 = -1;
+    private int dobissRelay01Id10 = -1;
+    private int dobissRelay01Id11 = -1;
+    private int dobissRelay01Id12 = -1;
+    private int dobissRelay02Id01 = -1;
+    private int dobissRelay02Id02 = -1;
+    private int dobissRelay02Id03 = -1;
+    private int dobissRelay02Id04 = -1;
+    private int dobissRelay02Id05 = -1;
+    private int dobissRelay02Id06 = -1;
+    private int dobissRelay02Id07 = -1;
+    private int dobissRelay02Id08 = -1;
+    private int dobissRelay02Id09 = -1;
+    private int dobissRelay02Id10 = -1;
+    private int dobissRelay02Id11 = -1;
+    private int dobissRelay02Id12 = -1;
+    private int dobissDimmer01Id01 = -1;
+    private int dobissDimmer01Id02 = -1;
+    private int dobissDimmer01Id03 = -1;
+    private int dobissDimmer01Id04 = -1;
+    private int dobissDimmer02Id01 = -1;
+    private int dobissDimmer02Id02 = -1;
+    private int dobissDimmer02Id03 = -1;
+    private int dobissDimmer02Id04 = -1;
+
     private DobissRelay dobissRelay01 = new DobissRelay();
     private DobissRelay dobissRelay02 = new DobissRelay();
 
@@ -609,132 +643,228 @@ public class DobissHandler extends BaseThingHandler {
         String channelID = channelUID.getId();
         switch (channelID) {
             case CHANNEL_RELAY01_ID_1:
-                updateState(CHANNEL_RELAY01_ID_1, DecimalType.valueOf(Integer.toString(dobissRelay01.id01)));
-                logger.debug("Update status for relay01_id01 {}", dobissRelay01.id01);
+                if (dobissRelay01Id01 != dobissRelay01.id01) {
+                    updateState(CHANNEL_RELAY01_ID_1, DecimalType.valueOf(Integer.toString(dobissRelay01.id01)));
+                    dobissRelay01Id01 = dobissRelay01.id01;
+                    logger.debug("Update status for relay01_id01 {}", dobissRelay01.id01);
+                }
                 break;
             case CHANNEL_RELAY01_ID_2:
-                updateState(CHANNEL_RELAY01_ID_2, DecimalType.valueOf(Integer.toString(dobissRelay01.id02)));
-                logger.debug("Update status for relay01_id02 {}", dobissRelay01.id02);
+                if (dobissRelay01Id02 != dobissRelay01.id02) {
+                    updateState(CHANNEL_RELAY01_ID_2, DecimalType.valueOf(Integer.toString(dobissRelay01.id02)));
+                    dobissRelay01Id02 = dobissRelay01.id02;
+                    logger.debug("Update status for relay01_id02 {}", dobissRelay01.id02);
+                }
                 break;
             case CHANNEL_RELAY01_ID_3:
-                updateState(CHANNEL_RELAY01_ID_3, DecimalType.valueOf(Integer.toString(dobissRelay01.id03)));
-                logger.debug("Update status for relay01_id03 {}", dobissRelay01.id03);
+                if (dobissRelay01Id03 != dobissRelay01.id03) {
+                    updateState(CHANNEL_RELAY01_ID_3, DecimalType.valueOf(Integer.toString(dobissRelay01.id03)));
+                    dobissRelay01Id03 = dobissRelay01.id03;
+                    logger.debug("Update status for relay01_id03 {}", dobissRelay01.id03);
+                }
                 break;
             case CHANNEL_RELAY01_ID_4:
-                updateState(CHANNEL_RELAY01_ID_4, DecimalType.valueOf(Integer.toString(dobissRelay01.id04)));
-                logger.debug("Update status for relay01_id04 {}", dobissRelay01.id04);
+                if (dobissRelay01Id04 != dobissRelay01.id04) {
+                    updateState(CHANNEL_RELAY01_ID_4, DecimalType.valueOf(Integer.toString(dobissRelay01.id04)));
+                    dobissRelay01Id04 = dobissRelay01.id04;
+                    logger.debug("Update status for relay01_id04 {}", dobissRelay01.id04);
+                }
                 break;
             case CHANNEL_RELAY01_ID_5:
-                updateState(CHANNEL_RELAY01_ID_5, DecimalType.valueOf(Integer.toString(dobissRelay01.id05)));
-                logger.debug("Update status for relay01_id05 {}", dobissRelay01.id05);
+                if (dobissRelay01Id05 != dobissRelay01.id05) {
+                    updateState(CHANNEL_RELAY01_ID_5, DecimalType.valueOf(Integer.toString(dobissRelay01.id05)));
+                    dobissRelay01Id05 = dobissRelay01.id05;
+                    logger.debug("Update status for relay01_id05 {}", dobissRelay01.id05);
+                }
                 break;
             case CHANNEL_RELAY01_ID_6:
-                updateState(CHANNEL_RELAY01_ID_6, DecimalType.valueOf(Integer.toString(dobissRelay01.id06)));
-                logger.debug("Update status for relay01_id06 {}", dobissRelay01.id06);
+                if (dobissRelay01Id06 != dobissRelay01.id06) {
+                    updateState(CHANNEL_RELAY01_ID_6, DecimalType.valueOf(Integer.toString(dobissRelay01.id06)));
+                    dobissRelay01Id06 = dobissRelay01.id06;
+                    logger.debug("Update status for relay01_id06 {}", dobissRelay01.id06);
+                }
                 break;
             case CHANNEL_RELAY01_ID_7:
-                updateState(CHANNEL_RELAY01_ID_7, DecimalType.valueOf(Integer.toString(dobissRelay01.id07)));
-                logger.debug("Update status for relay01_id07 {}", dobissRelay01.id07);
+                if (dobissRelay01Id07 != dobissRelay01.id07) {
+                    updateState(CHANNEL_RELAY01_ID_7, DecimalType.valueOf(Integer.toString(dobissRelay01.id07)));
+                    dobissRelay01Id07 = dobissRelay01.id07;
+                    logger.debug("Update status for relay01_id07 {}", dobissRelay01.id07);
+                }
                 break;
             case CHANNEL_RELAY01_ID_8:
-                updateState(CHANNEL_RELAY01_ID_8, DecimalType.valueOf(Integer.toString(dobissRelay01.id08)));
-                logger.debug("Update status for relay01_id08 {}", dobissRelay01.id08);
+                if (dobissRelay01Id08 != dobissRelay01.id08) {
+                    updateState(CHANNEL_RELAY01_ID_8, DecimalType.valueOf(Integer.toString(dobissRelay01.id08)));
+                    dobissRelay01Id08 = dobissRelay01.id08;
+                    logger.debug("Update status for relay01_id08 {}", dobissRelay01.id08);
+                }
                 break;
             case CHANNEL_RELAY01_ID_9:
-                updateState(CHANNEL_RELAY01_ID_9, DecimalType.valueOf(Integer.toString(dobissRelay01.id09)));
-                logger.debug("Update status for relay01_id09 {}", dobissRelay01.id09);
+                if (dobissRelay01Id09 != dobissRelay01.id09) {
+                    updateState(CHANNEL_RELAY01_ID_9, DecimalType.valueOf(Integer.toString(dobissRelay01.id09)));
+                    dobissRelay01Id09 = dobissRelay01.id09;
+                    logger.debug("Update status for relay01_id09 {}", dobissRelay01.id09);
+                }
                 break;
             case CHANNEL_RELAY01_ID_10:
-                updateState(CHANNEL_RELAY01_ID_10, DecimalType.valueOf(Integer.toString(dobissRelay01.id10)));
-                logger.debug("Update status for relay01_id10 {}", dobissRelay01.id10);
+                if (dobissRelay01Id10 != dobissRelay01.id10) {
+                    updateState(CHANNEL_RELAY01_ID_10, DecimalType.valueOf(Integer.toString(dobissRelay01.id10)));
+                    dobissRelay01Id10 = dobissRelay01.id10;
+                    logger.debug("Update status for relay01_id10 {}", dobissRelay01.id10);
+                }
                 break;
             case CHANNEL_RELAY01_ID_11:
-                updateState(CHANNEL_RELAY01_ID_11, DecimalType.valueOf(Integer.toString(dobissRelay01.id11)));
-                logger.debug("Update status for relay01_id11 {}", dobissRelay01.id11);
+                if (dobissRelay01Id11 != dobissRelay01.id11) {
+                    updateState(CHANNEL_RELAY01_ID_11, DecimalType.valueOf(Integer.toString(dobissRelay01.id11)));
+                    dobissRelay01Id11 = dobissRelay01.id11;
+                    logger.debug("Update status for relay01_id11 {}", dobissRelay01.id11);
+                }
                 break;
             case CHANNEL_RELAY01_ID_12:
-                updateState(CHANNEL_RELAY01_ID_12, DecimalType.valueOf(Integer.toString(dobissRelay01.id12)));
-                logger.debug("Update status for relay01_id12 {}", dobissRelay01.id12);
+                if (dobissRelay01Id12 != dobissRelay01.id12) {
+                    updateState(CHANNEL_RELAY01_ID_12, DecimalType.valueOf(Integer.toString(dobissRelay01.id12)));
+                    dobissRelay01Id12 = dobissRelay01.id12;
+                    logger.debug("Update status for relay01_id12 {}", dobissRelay01.id12);
+                }
                 break;
             case CHANNEL_RELAY02_ID_1:
-                updateState(CHANNEL_RELAY02_ID_1, DecimalType.valueOf(Integer.toString(dobissRelay02.id01)));
-                logger.debug("Update status for relay02_id01 {}", dobissRelay01.id01);
+                if (dobissRelay02Id01 != dobissRelay02.id01) {
+                    updateState(CHANNEL_RELAY02_ID_1, DecimalType.valueOf(Integer.toString(dobissRelay02.id01)));
+                    dobissRelay02Id01 = dobissRelay02.id01;
+                    logger.debug("Update status for relay02_id01 {}", dobissRelay02.id01);
+                }
                 break;
             case CHANNEL_RELAY02_ID_2:
-                updateState(CHANNEL_RELAY02_ID_2, DecimalType.valueOf(Integer.toString(dobissRelay02.id02)));
-                logger.debug("Update status for relay02_id02 {}", dobissRelay01.id02);
+                if (dobissRelay02Id02 != dobissRelay02.id02) {
+                    updateState(CHANNEL_RELAY02_ID_2, DecimalType.valueOf(Integer.toString(dobissRelay02.id02)));
+                    dobissRelay02Id02 = dobissRelay02.id02;
+                    logger.debug("Update status for relay02_id02 {}", dobissRelay02.id02);
+                }
                 break;
             case CHANNEL_RELAY02_ID_3:
-                updateState(CHANNEL_RELAY02_ID_3, DecimalType.valueOf(Integer.toString(dobissRelay02.id03)));
-                logger.debug("Update status for relay02_id03 {}", dobissRelay01.id03);
+                if (dobissRelay02Id03 != dobissRelay02.id03) {
+                    updateState(CHANNEL_RELAY02_ID_3, DecimalType.valueOf(Integer.toString(dobissRelay02.id03)));
+                    dobissRelay02Id03 = dobissRelay02.id03;
+                    logger.debug("Update status for relay02_id03 {}", dobissRelay02.id03);
+                }
                 break;
             case CHANNEL_RELAY02_ID_4:
-                updateState(CHANNEL_RELAY02_ID_4, DecimalType.valueOf(Integer.toString(dobissRelay02.id04)));
-                logger.debug("Update status for relay02_id04 {}", dobissRelay01.id04);
+                if (dobissRelay02Id04 != dobissRelay02.id04) {
+                    updateState(CHANNEL_RELAY02_ID_4, DecimalType.valueOf(Integer.toString(dobissRelay02.id04)));
+                    dobissRelay02Id04 = dobissRelay02.id04;
+                    logger.debug("Update status for relay02_id04 {}", dobissRelay02.id04);
+                }
                 break;
             case CHANNEL_RELAY02_ID_5:
-                updateState(CHANNEL_RELAY02_ID_5, DecimalType.valueOf(Integer.toString(dobissRelay02.id05)));
-                logger.debug("Update status for relay02_id05 {}", dobissRelay01.id05);
+                if (dobissRelay02Id05 != dobissRelay02.id05) {
+                    updateState(CHANNEL_RELAY02_ID_5, DecimalType.valueOf(Integer.toString(dobissRelay02.id05)));
+                    dobissRelay02Id05 = dobissRelay02.id05;
+                    logger.debug("Update status for relay02_id05 {}", dobissRelay02.id05);
+                }
                 break;
             case CHANNEL_RELAY02_ID_6:
-                updateState(CHANNEL_RELAY02_ID_6, DecimalType.valueOf(Integer.toString(dobissRelay02.id06)));
-                logger.debug("Update status for relay02_id06 {}", dobissRelay01.id06);
+                if (dobissRelay02Id06 != dobissRelay02.id06) {
+                    updateState(CHANNEL_RELAY02_ID_6, DecimalType.valueOf(Integer.toString(dobissRelay02.id06)));
+                    dobissRelay02Id06 = dobissRelay02.id06;
+                    logger.debug("Update status for relay02_id06 {}", dobissRelay02.id06);
+                }
                 break;
             case CHANNEL_RELAY02_ID_7:
-                updateState(CHANNEL_RELAY02_ID_7, DecimalType.valueOf(Integer.toString(dobissRelay02.id07)));
-                logger.debug("Update status for relay02_id07 {}", dobissRelay01.id07);
+                if (dobissRelay02Id07 != dobissRelay02.id07) {
+                    updateState(CHANNEL_RELAY02_ID_7, DecimalType.valueOf(Integer.toString(dobissRelay02.id07)));
+                    dobissRelay02Id07 = dobissRelay02.id07;
+                    logger.debug("Update status for relay02_id07 {}", dobissRelay02.id07);
+                }
                 break;
             case CHANNEL_RELAY02_ID_8:
-                updateState(CHANNEL_RELAY02_ID_8, DecimalType.valueOf(Integer.toString(dobissRelay02.id08)));
-                logger.debug("Update status for relay02_id08 {}", dobissRelay01.id08);
+                if (dobissRelay02Id08 != dobissRelay02.id08) {
+                    updateState(CHANNEL_RELAY02_ID_8, DecimalType.valueOf(Integer.toString(dobissRelay02.id08)));
+                    dobissRelay02Id08 = dobissRelay02.id08;
+                    logger.debug("Update status for relay02_id08 {}", dobissRelay02.id08);
+                }
                 break;
             case CHANNEL_RELAY02_ID_9:
-                updateState(CHANNEL_RELAY02_ID_9, DecimalType.valueOf(Integer.toString(dobissRelay02.id09)));
-                logger.debug("Update status for relay02_id09 {}", dobissRelay01.id09);
+                if (dobissRelay02Id09 != dobissRelay02.id09) {
+                    updateState(CHANNEL_RELAY02_ID_9, DecimalType.valueOf(Integer.toString(dobissRelay02.id09)));
+                    dobissRelay02Id09 = dobissRelay02.id09;
+                    logger.debug("Update status for relay02_id09 {}", dobissRelay02.id09);
+                }
                 break;
             case CHANNEL_RELAY02_ID_10:
-                updateState(CHANNEL_RELAY02_ID_10, DecimalType.valueOf(Integer.toString(dobissRelay02.id10)));
-                logger.debug("Update status for relay02_id10 {}", dobissRelay01.id10);
+                if (dobissRelay02Id10 != dobissRelay02.id10) {
+                    updateState(CHANNEL_RELAY02_ID_10, DecimalType.valueOf(Integer.toString(dobissRelay02.id10)));
+                    dobissRelay02Id10 = dobissRelay02.id10;
+                    logger.debug("Update status for relay02_id10 {}", dobissRelay02.id10);
+                }
                 break;
             case CHANNEL_RELAY02_ID_11:
-                updateState(CHANNEL_RELAY02_ID_11, DecimalType.valueOf(Integer.toString(dobissRelay02.id11)));
-                logger.debug("Update status for relay02_id11 {}", dobissRelay01.id11);
+                if (dobissRelay02Id11 != dobissRelay02.id11) {
+                    updateState(CHANNEL_RELAY02_ID_11, DecimalType.valueOf(Integer.toString(dobissRelay02.id11)));
+                    dobissRelay02Id11 = dobissRelay02.id11;
+                    logger.debug("Update status for relay02_id11 {}", dobissRelay02.id11);
+                }
                 break;
             case CHANNEL_RELAY02_ID_12:
-                updateState(CHANNEL_RELAY02_ID_12, DecimalType.valueOf(Integer.toString(dobissRelay02.id12)));
-                logger.debug("Update status for relay02_id12 {}", dobissRelay01.id12);
+                if (dobissRelay02Id12 != dobissRelay02.id12) {
+                    updateState(CHANNEL_RELAY02_ID_12, DecimalType.valueOf(Integer.toString(dobissRelay02.id12)));
+                    dobissRelay02Id12 = dobissRelay02.id12;
+                    logger.debug("Update status for relay02_id12 {}", dobissRelay02.id12);
+                }
                 break;
             case CHANNEL_DIMMER01_ID_1:
-                updateState(CHANNEL_DIMMER01_ID_1, PercentType.valueOf(Integer.toString(dobissDimmer01.id01)));
-                logger.debug("Update status for dimmer01_id01 {}", dobissDimmer01.id01);
+                if (dobissDimmer01Id01 != dobissDimmer01.id01) {
+                    updateState(CHANNEL_DIMMER01_ID_1, PercentType.valueOf(Integer.toString(dobissDimmer01.id01)));
+                    dobissDimmer01Id01 = dobissDimmer01.id01;
+                    logger.debug("Update status for dimmer01_id01 {}", dobissDimmer01.id01);
+                }
                 break;
             case CHANNEL_DIMMER01_ID_2:
-                updateState(CHANNEL_DIMMER01_ID_2, PercentType.valueOf(Integer.toString(dobissDimmer01.id02)));
-                logger.debug("Update status for dimmer01_id02 {}", dobissDimmer01.id02);
+                if (dobissDimmer01Id02 != dobissDimmer01.id02) {
+                    updateState(CHANNEL_DIMMER01_ID_2, PercentType.valueOf(Integer.toString(dobissDimmer01.id02)));
+                    dobissDimmer01Id02 = dobissDimmer01.id02;
+                    logger.debug("Update status for dimmer01_id02 {}", dobissDimmer01.id02);
+                }
                 break;
             case CHANNEL_DIMMER01_ID_3:
-                updateState(CHANNEL_DIMMER01_ID_3, PercentType.valueOf(Integer.toString(dobissDimmer01.id03)));
-                logger.debug("Update status for dimmer01_id03 {}", dobissDimmer01.id03);
+                if (dobissDimmer01Id03 != dobissDimmer01.id03) {
+                    updateState(CHANNEL_DIMMER01_ID_3, PercentType.valueOf(Integer.toString(dobissDimmer01.id03)));
+                    dobissDimmer01Id03 = dobissDimmer01.id03;
+                    logger.debug("Update status for dimmer01_id03 {}", dobissDimmer01.id03);
+                }
                 break;
             case CHANNEL_DIMMER01_ID_4:
-                updateState(CHANNEL_DIMMER01_ID_4, PercentType.valueOf(Integer.toString(dobissDimmer01.id04)));
-                logger.debug("Update status for dimmer01_id04 {}", dobissDimmer01.id04);
+                if (dobissDimmer01Id04 != dobissDimmer01.id04) {
+                    updateState(CHANNEL_DIMMER01_ID_4, PercentType.valueOf(Integer.toString(dobissDimmer01.id04)));
+                    dobissDimmer01Id04 = dobissDimmer01.id04;
+                    logger.debug("Update status for dimmer01_id04 {}", dobissDimmer01.id04);
+                }
                 break;
             case CHANNEL_DIMMER02_ID_1:
-                updateState(CHANNEL_DIMMER02_ID_1, PercentType.valueOf(Integer.toString(dobissDimmer02.id01)));
-                logger.debug("Update status for dimmer02_id01 {}", dobissDimmer02.id01);
+                if (dobissDimmer02Id01 != dobissDimmer02.id01) {
+                    updateState(CHANNEL_DIMMER02_ID_1, PercentType.valueOf(Integer.toString(dobissDimmer02.id01)));
+                    dobissDimmer02Id01 = dobissDimmer02.id01;
+                    logger.debug("Update status for dimmer02_id01 {}", dobissDimmer02.id01);
+                }
                 break;
             case CHANNEL_DIMMER02_ID_2:
-                updateState(CHANNEL_DIMMER02_ID_2, PercentType.valueOf(Integer.toString(dobissDimmer02.id02)));
-                logger.debug("Update status for dimmer02_id02 {}", dobissDimmer02.id02);
+                if (dobissDimmer02Id02 != dobissDimmer02.id02) {
+                    updateState(CHANNEL_DIMMER02_ID_2, PercentType.valueOf(Integer.toString(dobissDimmer02.id02)));
+                    dobissDimmer02Id02 = dobissDimmer02.id02;
+                    logger.debug("Update status for dimmer02_id02 {}", dobissDimmer02.id02);
+                }
                 break;
             case CHANNEL_DIMMER02_ID_3:
-                updateState(CHANNEL_DIMMER02_ID_3, PercentType.valueOf(Integer.toString(dobissDimmer02.id03)));
-                logger.debug("Update status for dimmer02_id03 {}", dobissDimmer02.id03);
+                if (dobissDimmer02Id03 != dobissDimmer02.id03) {
+                    updateState(CHANNEL_DIMMER02_ID_3, PercentType.valueOf(Integer.toString(dobissDimmer02.id03)));
+                    dobissDimmer02Id03 = dobissDimmer02.id03;
+                    logger.debug("Update status for dimmer02_id03 {}", dobissDimmer02.id03);
+                }
                 break;
             case CHANNEL_DIMMER02_ID_4:
-                updateState(CHANNEL_DIMMER02_ID_4, PercentType.valueOf(Integer.toString(dobissDimmer02.id04)));
-                logger.debug("Update status for dimmer02_id04 {}", dobissDimmer02.id04);
+                if (dobissDimmer02Id04 != dobissDimmer02.id04) {
+                    updateState(CHANNEL_DIMMER02_ID_4, PercentType.valueOf(Integer.toString(dobissDimmer02.id04)));
+                    dobissDimmer02Id04 = dobissDimmer02.id04;
+                    logger.debug("Update status for dimmer02_id04 {}", dobissDimmer02.id04);
+                }
                 break;
             default:
                 logger.debug("Can not update channel with ID : {} - channel name might be wrong!", channelID);
